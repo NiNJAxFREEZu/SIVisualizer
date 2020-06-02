@@ -103,6 +103,7 @@ def parse_result_to_2d_array(path, colors):
         new_row = list()
         for elem in line:
             color = colors[str(elem[0])]
+            color = COLOR_VALUES[color]
             new_row.append(color)
         board.append(new_row)
     return board
