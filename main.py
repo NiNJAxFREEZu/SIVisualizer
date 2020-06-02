@@ -22,11 +22,11 @@ def drawBoard(board):
             pygame.draw.rect(SCREEN, Config.Grid.colour, rect, Config.Grid.thickness)
 
     # Drawing circles
-    circleSize = int(Config.Window.side / len(board) / 4)  # Set the size of the grid block
+    circleSize = int(blockSize / 4)
     for x in range(len(board)):
         for y in range(len(board)):
             pygame.draw.circle(SCREEN, randomColour(),
-                               ((x * blockSize) + circleSize, (y * blockSize) + circleSize), circleSize)
+                               (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize)
 
 
 # pygame init
