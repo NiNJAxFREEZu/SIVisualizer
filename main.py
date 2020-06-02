@@ -25,8 +25,18 @@ def drawBoard(board):
     circleSize = int(blockSize / 4)
     for x in range(len(board)):
         for y in range(len(board)):
-            pygame.draw.circle(SCREEN, randomColour(),
+            colour = randomColour()
+            # draw circle
+            pygame.draw.circle(SCREEN, colour,
                                (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize)
+
+            # draw circle border
+            pygame.draw.circle(SCREEN, Config.Grid.colour,
+                               (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize, Config.Grid.thickness)
+
+
+def drawResult(result):
+    print("todo")
 
 
 # pygame init
