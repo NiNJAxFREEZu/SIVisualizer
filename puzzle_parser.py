@@ -5,8 +5,10 @@
 """
 
 """
-from random import randrange
 import collections
+from random import randrange
+import json
+import math
 
 COLOR_VALUES = {
     "R": (255, 50, 50),
@@ -74,6 +76,41 @@ def parse_input_file_to_2d_array(path):
         board.append(new_row)
 
     return board
+
+
+res = "result_01.txt"
+
+c = {
+    "0": "R",
+    "1": "G"
+}
+
+
+def chunks(l, n):
+    n = max(1, n)
+    return (l[i:i + n] for i in range(0, len(l), n))
+
+
+def parse_result_to_2d_array(path, colors):
+    with open(path) as f:
+        input_board = json.load(f)
+    size = len(input_board)
+    dim = int(math.sqrt(size))
+    input_board = chunks(input_board, dim)
+
+    board = list()
+    for line in input_board:
+        new_row = list()
+        for elem in line:
+            color = colors[str(elem[0])]
+            new_row.append(color)
+        board.append(new_row)
+    return board
+
+
+if __name__ == '__main__':
+    for line in parse_result_to_2d_array(res, c):
+        print(line)
 
 
 def parse_puzzle(filename):
