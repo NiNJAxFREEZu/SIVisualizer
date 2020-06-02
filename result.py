@@ -1,6 +1,9 @@
-class Result:
-    result = ""
+from config import Config
 
-    def load(self, filepath):
+
+class Result:
+
+    def load(filepath):
         with open(filepath, 'r') as resultFile:
-            self.result = resultFile.readlines()
+            result = resultFile.readlines()
+        return result

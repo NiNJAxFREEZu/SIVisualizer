@@ -1,7 +1,10 @@
-class Board:
-    board = ""
+from config import Config
 
-    def load(self, filepath):
+
+class Board:
+
+    def load(filepath):
         with open(filepath, 'r') as boardFile:
-            self.board = boardFile.readlines()
+            board = boardFile.readlines()
+        return board
 
