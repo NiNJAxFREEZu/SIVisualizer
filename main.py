@@ -7,6 +7,13 @@ pygame.init()
 # create the screen
 screen = pygame.display.set_mode(Config.windowSize)
 
+# window caption
+pygame.display.set_caption(Config.windowCaption)
+
+# window logo
+icon = pygame.image.load(Config.windowIconPath)
+pygame.display.set_icon(icon)
+
 # main loop
 running = True
 while running:
