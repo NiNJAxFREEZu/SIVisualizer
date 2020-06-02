@@ -1,10 +1,19 @@
 import pygame
+from random import randrange
 from config import Config
 import board
 import result
 
 
-def drawGrid(board):
+def randomColour():
+    red = randrange(256)
+    green = randrange(256)
+    blue = randrange(256)
+    return red, green, blue
+
+
+def drawBoard(board):
+    # Drawing grid
     blockSize = int(Config.Window.side / len(board))  # Set the size of the grid block
     for x in range(len(board)):
         for y in range(len(board)):
@@ -12,9 +21,12 @@ def drawGrid(board):
                                blockSize, blockSize)
             pygame.draw.rect(SCREEN, Config.Grid.colour, rect, Config.Grid.thickness)
 
-
-def drawBoard(board):
-    drawGrid(board)
+    # Drawing circles
+    circleSize = int(Config.Window.side / len(board) / 4)  # Set the size of the grid block
+    for x in range(len(board)):
+        for y in range(len(board)):
+            pygame.draw.circle(SCREEN, randomColour(),
+                               ((x * blockSize) + circleSize, (y * blockSize) + circleSize), circleSize)
 
 
 # pygame init
