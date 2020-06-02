@@ -1,7 +1,7 @@
 import pygame
 from config import Config
-from board import Board
-from result import Result
+import board
+import result
 
 
 def drawGrid(board):
@@ -14,7 +14,7 @@ def drawGrid(board):
 
 
 def drawBoard(board):
-    print("todo")
+    drawGrid(board)
 
 
 # pygame init
@@ -31,12 +31,14 @@ icon = pygame.image.load(Config.Window.iconPath)
 pygame.display.set_icon(icon)
 
 # TEST
-BOARD = Board.load("board_01.txt")
-print(len(BOARD))
+BOARD = board.load("board_01.txt")
+RESULT = result.load("result_01.txt")
+print(BOARD)
+print(RESULT)
 
-# main loop
+# Action!
 SCREEN.fill(Config.Window.backgroundColour)
-drawGrid(BOARD)
+drawBoard(BOARD)
 running = True
 while running:
     for event in pygame.event.get():
