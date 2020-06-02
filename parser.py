@@ -75,14 +75,6 @@ def parse_input_file_to_2d_array(path):
 
     return board
 
-
-
-if __name__ == '__main__':
-    print(parse_input_file_to_2d_array(file))
-    for x in parse_input_file_to_2d_array(file):
-        print(x)
-
-
 def parse_puzzle(filename):
     # pobiera z pliku informacje na temat planszy,
     # zwraca słownik mapujący znaki kolorów na liczby

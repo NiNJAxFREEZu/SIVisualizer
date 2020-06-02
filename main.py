@@ -27,15 +27,11 @@ def drawBoard(board):
     for x in range(len(board)):
         for y in range(len(board)):
             colour = board[y][x]
-            if(colour == 'blank'):
+            if colour == 'blank':
                 continue
             # draw circle
             pygame.draw.circle(SCREEN, colour,
                                (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize)
-
-            # draw circle border
-            pygame.draw.circle(SCREEN, Config.Grid.colour,
-                               (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize, Config.Grid.thickness)
 
 
 def drawResult(result):
