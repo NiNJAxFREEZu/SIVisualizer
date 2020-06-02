@@ -8,7 +8,7 @@
 from random import randrange
 import collections
 
-file = f"C:\\Users\\Patryk\\PycharmProjects\\SIVisualizer\\board_01.txt"
+file = f"board_01.txt"
 
 COLOR_VALUES = {
     "R": (255, 0, 0),
@@ -60,9 +60,29 @@ def parse_input_file(path):
     return parsed_board
 
 
+def parse_input_file_to_2d_array(path):
+    with open(path, 'r') as input_board:
+        input_board = input_board.read().split()
+
+    board = list()
+    for line in input_board:
+        new_row = list()
+        for sign in line:
+            if sign == '.':
+                color = "blank"
+            else:
+                color = COLOR_VALUES[sign]
+            new_row.append(color)
+        board.append(new_row)
+
+    return board
+
+
+
 if __name__ == '__main__':
-    for line in parse_input_file(file):
-        print(line)
+    print(parse_input_file_to_2d_array(file))
+    for x in parse_input_file_to_2d_array(file):
+        print(x)
 
 
 def parse_puzzle(filename):
