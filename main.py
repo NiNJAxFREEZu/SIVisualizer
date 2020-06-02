@@ -2,7 +2,7 @@ import pygame
 import sys
 from random import randrange
 from config import Config
-import board
+import parser
 import result
 
 
@@ -67,7 +67,7 @@ pygame.display.set_icon(icon)
 boardPath = "board_01.txt"
 resultPath = "result_01.txt"
 
-BOARD = board.load(boardPath)
+BOARD = parser.parse_input_file_to_2d_array(boardPath)
 RESULT = result.load(resultPath)
 
 # Action!

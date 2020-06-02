@@ -8,8 +8,6 @@
 from random import randrange
 import collections
 
-file = f"board_01.txt"
-
 COLOR_VALUES = {
     "R": (255, 0, 0),
     "G": (0, 255, 0),
