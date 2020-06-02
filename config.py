@@ -1,13 +1,21 @@
 class Config:
-    # Size of the window
-    windowSide = 1000
-    windowSize = (windowSide, windowSide)
+    class Window:
+        # Size of the window
+        side = 1000
+        size = (side, side)
 
-    # Window caption
-    windowCaption = "Free flow"
+        # Window caption
+        caption = "Free flow"
 
-    # Window logo
-    windowIconPath = "img/icon.jpg"
+        # Window logo
+        iconPath = "img/icon.jpg"
 
-    # RGB background colour
-    backgroundColour = (255, 255, 255)
+        # RGB background colour
+        backgroundColour = (255, 255, 255)
+
+    class Grid:
+        # Determines how far the base grid will be drawn from the window border
+        padding = 5
+
+        # RGB grid colout
+        colour = (195, 195, 195)

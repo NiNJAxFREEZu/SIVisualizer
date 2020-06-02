@@ -5,13 +5,13 @@ from config import Config
 pygame.init()
 
 # create the screen
-screen = pygame.display.set_mode(Config.windowSize)
+screen = pygame.display.set_mode(Config.Window.size)
 
 # window caption
-pygame.display.set_caption(Config.windowCaption)
+pygame.display.set_caption(Config.Window.caption)
 
 # window logo
-icon = pygame.image.load(Config.windowIconPath)
+icon = pygame.image.load(Config.Window.iconPath)
 pygame.display.set_icon(icon)
 
 # main loop
@@ -21,8 +21,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-
-    screen.fill(Config.backgroundColour)
+    screen.fill(Config.Window.backgroundColour)
     pygame.display.update()
 
 
