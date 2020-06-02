@@ -1,4 +1,5 @@
 import pygame
+import sys
 from random import randrange
 from config import Config
 import board
@@ -54,8 +55,20 @@ pygame.display.set_caption(Config.Window.caption)
 icon = pygame.image.load(Config.Window.iconPath)
 pygame.display.set_icon(icon)
 
-BOARD = board.load("board_01.txt")
-RESULT = result.load("result_01.txt")
+# load parameters
+# if len(sys.argv) != 3:
+    # sys.stderr.write("ERROR: Amount of parameters don't match!\n")
+    # sys.stderr.write("Try using: visualizer.py [board-file-path] [result-file-path]")
+    # exit(1)
+
+# boardPath = str(sys.argv[1])
+# resultPath = str(sys.argv[2])
+
+boardPath = "board_01.txt"
+resultPath = "result_01.txt"
+
+BOARD = board.load(boardPath)
+RESULT = result.load(resultPath)
 
 # Action!
 SCREEN.fill(Config.Window.backgroundColour)
