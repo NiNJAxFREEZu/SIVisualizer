@@ -15,10 +15,11 @@ class Config:
 
     class Grid:
         # Determines how far the base grid will be drawn from the window border
+        # TODO
         padding = 20
 
         # Determines the THICCNESS of the grid
         thickness = 10
 
         # RGB grid colour
-        colour = (195, 195, 195)
+        colour = (185, 185, 185)

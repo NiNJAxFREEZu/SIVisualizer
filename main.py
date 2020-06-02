@@ -38,7 +38,7 @@ def drawBoard(board):
 
 
 def drawResult(result):
-    print("todo")
+    print("drawResult() -> TODO")
 
 
 # pygame init
@@ -65,6 +65,8 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            drawResult(RESULT)
 
     pygame.display.update()
 
