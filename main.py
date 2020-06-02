@@ -35,7 +35,13 @@ def drawBoard(board):
 
 
 def drawResult(result):
-    print("drawResult() -> TODO")
+    # Drawing grid
+    blockSize = int(Config.Window.side / len(result))  # Set the size of the grid block
+    for x in range(len(result)):
+        for y in range(len(result)):
+            rect = pygame.Rect(x * blockSize, y * blockSize,
+                               blockSize, blockSize)
+            pygame.draw.rect(SCREEN, Config.Grid.colour, rect, Config.Grid.thickness)
 
 
 # pygame init
