@@ -18,4 +18,8 @@ class Config:
         thickness = 10
 
         # RGB grid colour
-        colour = (185, 185, 185)
+        colour = (20, 20, 20)
+
+
+    class Circle:
+        borderColour = (10, 10, 10)

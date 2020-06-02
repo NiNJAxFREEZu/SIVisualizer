@@ -1,16 +1,8 @@
 import pygame
 import sys
-from random import randrange
 from config import Config
 import puzzle_parser
 import result
-
-
-def randomColour():
-    red = randrange(256)
-    green = randrange(256)
-    blue = randrange(256)
-    return red, green, blue
 
 
 def drawBoard(board):
@@ -32,6 +24,9 @@ def drawBoard(board):
             # draw circle
             pygame.draw.circle(SCREEN, colour,
                                (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize)
+            # draw circle border
+            pygame.draw.circle(SCREEN, Config.Circle.borderColour,
+                               (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize, int(Config.Grid.thickness / 2))
 
 
 def drawResult(result):
@@ -39,9 +34,10 @@ def drawResult(result):
     blockSize = int(Config.Window.side / len(result))  # Set the size of the grid block
     for x in range(len(result)):
         for y in range(len(result)):
+            colour = result[y][x]
             rect = pygame.Rect(x * blockSize, y * blockSize,
                                blockSize, blockSize)
-            pygame.draw.rect(SCREEN, Config.Grid.colour, rect, Config.Grid.thickness)
+            pygame.draw.rect(SCREEN, colour, rect)
 
 
 # pygame init
@@ -70,7 +66,7 @@ boardPath = "board_01.txt"
 resultPath = "result_01.txt"
 
 BOARD = puzzle_parser.parse_input_file_to_2d_array(boardPath)
-RESULT = result.load(resultPath)
+RESULT = puzzle_parser.parse_result_to_2d_array(resultPath, puzzle_parser.c)
 
 # Action!
 SCREEN.fill(Config.Window.backgroundColour)
@@ -82,6 +78,7 @@ while running:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             drawResult(RESULT)
+            drawBoard(BOARD)
 
     pygame.display.update()
 
