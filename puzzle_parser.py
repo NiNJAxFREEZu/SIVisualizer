@@ -109,9 +109,32 @@ def parse_result_to_2d_array(path, colors):
     return board
 
 
+from ast import literal_eval
+
+t = "test"
+import itertools
+
+
+def test(path, colors):
+    with open(path) as f:
+        input_board = [list(literal_eval(line)) for line in f]
+        input_board = list(itertools.chain(*input_board))
+
+    board = list()
+    for line in input_board:
+        new_row = list()
+        for elem in line:
+            color = colors[str(elem[0])]
+            color = COLOR_VALUES[color]
+            new_row.append(color)
+        board.append(new_row)
+    return board
+
+
 if __name__ == '__main__':
-    for line in parse_result_to_2d_array(res, c):
-        print(line)
+    for l in test(t, c):
+        print(l)
+    print()
 
 
 def parse_puzzle(filename):
