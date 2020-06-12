@@ -95,7 +95,11 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            drawResult(RESULT)
-            drawBoard(BOARD)
+            pos = pygame.mouse.get_pos()
+
+            # If solve button was pressed
+            if pos[1] > Config.Window.side:
+                drawResult(RESULT)
+                drawBoard(BOARD)
 
     pygame.display.update()
