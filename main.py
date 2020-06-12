@@ -3,6 +3,7 @@ import sys
 from config import Config
 import puzzle_parser
 import result
+import FreeFlowSolver.SAT as SatSolver
 
 def drawButton():
     # Drawing button rectangle
@@ -35,7 +36,8 @@ def drawBoard(board):
                                (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize)
             # draw circle border
             pygame.draw.circle(SCREEN, Config.Circle.borderColour,
-                               (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize, int(Config.Grid.thickness / 2))
+                               (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize,
+                               int(Config.Grid.thickness / 2))
 
 
 def drawResult(result):
@@ -64,18 +66,24 @@ pygame.display.set_icon(icon)
 
 # load parameters
 # if len(sys.argv) != 3:
-    # sys.stderr.write("ERROR: Amount of parameters don't match!\n")
-    # sys.stderr.write("Try using: visualizer.py [board-file-path] [result-file-path]")
-    # exit(1)
+# sys.stderr.write("ERROR: Amount of parameters don't match!\n")
+# sys.stderr.write("Try using: visualizer.py [board-file-path] [result-file-path]")
+# exit(1)
 
 # boardPath = str(sys.argv[1])
 # resultPath = str(sys.argv[2])
 
 boardPath = "board_01.txt"
-resultPath = "result_01.txt"
+# resultPath = "result_01.txt"
 
-BOARD = puzzle_parser.parse_input_file_to_2d_array(boardPath)
-RESULT = puzzle_parser.parse_result_to_2d_array(resultPath, puzzle_parser.c)
+BOARD, COLORS_PARSED_INPUT = SatSolver.parse_puzzle(boardPath)
+color_var, dir_vars, num_vars, clauses = SatSolver.reduce_to_sat(BOARD, COLORS_PARSED_INPUT)
+_, SAT_DECODED_SOLUTION = SatSolver.solve_sat(BOARD, COLORS_PARSED_INPUT, color_var, dir_vars, clauses)
+
+SWAPED_COLORS = dict([(str(value), str(key)) for key, value in COLORS_PARSED_INPUT.items()])
+
+BOARD = puzzle_parser.parse_input_file_to_2d_array(BOARD)
+RESULT = puzzle_parser.parse_result_to_2d_array(SAT_DECODED_SOLUTION, SWAPED_COLORS)
 
 # Action!
 SCREEN.fill(Config.Window.backgroundColour)
@@ -91,7 +99,3 @@ while running:
             drawBoard(BOARD)
 
     pygame.display.update()
-
-
-
-

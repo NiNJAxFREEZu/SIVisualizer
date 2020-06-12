@@ -60,12 +60,9 @@ def parse_input_file(path):
     return parsed_board
 
 
-def parse_input_file_to_2d_array(path):
-    with open(path, 'r') as input_board:
-        input_board = input_board.read().split()
-
+def parse_input_file_to_2d_array(BOARD):
     board = list()
-    for line in input_board:
+    for line in BOARD:
         new_row = list()
         for sign in line:
             if sign == '.':
@@ -91,15 +88,27 @@ def chunks(l, n):
     return (l[i:i + n] for i in range(0, len(l), n))
 
 
-def parse_result_to_2d_array(path, colors):
-    with open(path) as f:
-        input_board = json.load(f)
-    size = len(input_board)
-    dim = int(math.sqrt(size))
-    input_board = chunks(input_board, dim)
+# def parse_result_to_2d_array(path, colors):
+#     with open(path) as f:
+#         input_board = json.load(f)
+#     size = len(input_board)
+#     dim = int(math.sqrt(size))
+#     input_board = chunks(input_board, dim)
+#
+#     board = list()
+#     for line in input_board:
+#         new_row = list()
+#         for elem in line:
+#             color = colors[str(elem[0])]
+#             color = COLOR_VALUES[color]
+#             new_row.append(color)
+#         board.append(new_row)
+#     return board
 
+
+def parse_result_to_2d_array(SOLUTION, colors):
     board = list()
-    for line in input_board:
+    for line in SOLUTION:
         new_row = list()
         for elem in line:
             color = colors[str(elem[0])]
@@ -109,72 +118,3 @@ def parse_result_to_2d_array(path, colors):
     return board
 
 
-from ast import literal_eval
-
-t = "test"
-import itertools
-
-
-def test(path, colors):
-    with open(path) as f:
-        input_board = [list(literal_eval(line)) for line in f]
-        input_board = list(itertools.chain(*input_board))
-
-    board = list()
-    for line in input_board:
-        new_row = list()
-        for elem in line:
-            color = colors[str(elem[0])]
-            color = COLOR_VALUES[color]
-            new_row.append(color)
-        board.append(new_row)
-    return board
-
-
-if __name__ == '__main__':
-    for l in test(t, c):
-        print(l)
-    print()
-
-
-def parse_puzzle(filename):
-    # pobiera z pliku informacje na temat planszy,
-    # zwraca słownik mapujący znaki kolorów na liczby
-    # np. {"R":0, "G":1, "Y",2}
-
-    f = open(filename, "r")
-    if f.mode == 'r':
-        board = f.read().splitlines()
-
-    size = len(board[0])
-    board = board[:size]
-
-    colors = dict()
-    color_counter = []
-
-    for i, row in enumerate(board):
-        for j, char in enumerate(row):
-            # jeśli komórka jest wierzchołkowa
-            if char.isalnum():
-                # jeśli już odnotowaliśmy ten kolor na planszy
-                if char in colors:
-                    color = colors[char]
-                    print("Just got ", char, " again.")
-                    # jeśli mamy już 2 komórki w tym kolorze
-                    if color_counter[color]:
-                        print('I already have too many ', char, '!')
-                        return None, None
-                    color_counter[color] = 1
-                else:
-                    print("Just got ", char, ".")
-                    color = len(colors)
-                    colors[char] = color
-                    color_counter.append(0)
-
-    # sprawdź czy każdy kolor występuje dwa razy
-    for char, color in colors.items():
-        if not color_counter[color]:
-            print('Color ', char, ' has start but no end!')
-            return None, None
-
-    return board, colors

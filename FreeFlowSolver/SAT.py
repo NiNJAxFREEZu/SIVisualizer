@@ -224,6 +224,6 @@ def solve_sat(puzzle, colors, color_var, dir_vars, clauses):
     return sol, decoded
 
 
-board, colors = parse_puzzle('board.txt')
-color_var, dir_vars, num_vars, clauses = reduce_to_sat(board, colors)
-sol, dec = solve_sat(board, colors, color_var, dir_vars, clauses)
+# board, colors = parse_puzzle('board.txt')
+# color_var, dir_vars, num_vars, clauses = reduce_to_sat(board, colors)
+# _, dec = solve_sat(board, colors, color_var, dir_vars, clauses)
