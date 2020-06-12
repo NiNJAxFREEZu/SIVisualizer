@@ -92,3 +92,20 @@ def parse_puzzle(filename):
             return None, None
 
     return board, colors
+
+
+
+#
+# import FreeFlowSolver.SAT as SatSolver
+# if __name__ == '__main__':
+#
+#     BOARD, COLORS_PARSED_INPUT = SatSolver.parse_puzzle("C:\\Users\\korne\\PycharmProjects\\SIVisualizer\\board_01.txt")
+#     color_var, dir_vars, num_vars, clauses = SatSolver.reduce_to_sat(BOARD, COLORS_PARSED_INPUT)
+#     _, SOLUTION = SatSolver.solve_sat(BOARD, COLORS_PARSED_INPUT, color_var, dir_vars, clauses)
+#
+#     print("kolort, ")
+#     print(COLORS_PARSED_INPUT)
+#     print("swap, ")
+#     print(SWAPED_COLORS)
+#     for i in test(SOLUTION, SWAPED_COLORS):
+#         print(i)
