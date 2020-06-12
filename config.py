@@ -1,12 +1,9 @@
 class Config:
     class Window:
-        # Buttons
-        buttonHeight = 150
+        # Window side and button props
+        side = 600
+        buttonHeight = int(side / 8)
         buttonColour = (100, 200, 200) # Grey
-        buttonText = "Solve"
-
-        # Size of the window
-        side = 800
         size = (side, side + buttonHeight)
 
         # Window caption

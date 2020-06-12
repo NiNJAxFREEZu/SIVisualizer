@@ -5,14 +5,14 @@ import puzzle_parser
 import result
 import FreeFlowSolver.SAT as SatSolver
 
-def drawButton():
+def drawButton(buttonText):
     # Drawing button rectangle
     pygame.draw.rect(SCREEN, Config.Window.buttonColour,
                      (0, Config.Window.side, Config.Window.side, Config.Window.buttonHeight))
 
     #Drawing button text
     myfont = pygame.font.SysFont('Comic Sans MS', Config.Window.buttonHeight)
-    textsurface = myfont.render(Config.Window.buttonText, False, (0, 0, 0))
+    textsurface = myfont.render(buttonText, False, (0, 0, 0))
     SCREEN.blit(textsurface, (0, Config.Window.side))
 
 def drawBoard(board):
@@ -76,6 +76,10 @@ pygame.display.set_icon(icon)
 boardPath = "board_01.txt"
 # resultPath = "result_01.txt"
 
+
+# Solving the puzzle!
+
+print("\nFree flow game!\n")
 BOARD, COLORS_PARSED_INPUT = SatSolver.parse_puzzle(boardPath)
 color_var, dir_vars, num_vars, clauses = SatSolver.reduce_to_sat(BOARD, COLORS_PARSED_INPUT)
 _, SAT_DECODED_SOLUTION = SatSolver.solve_sat(BOARD, COLORS_PARSED_INPUT, color_var, dir_vars, clauses)
@@ -85,9 +89,9 @@ SWAPED_COLORS = dict([(str(value), str(key)) for key, value in COLORS_PARSED_INP
 BOARD = puzzle_parser.parse_input_file_to_2d_array(BOARD)
 RESULT = puzzle_parser.parse_result_to_2d_array(SAT_DECODED_SOLUTION, SWAPED_COLORS)
 
-# Action!
+# Drawing everything
 SCREEN.fill(Config.Window.backgroundColour)
-drawButton()
+drawButton(buttonText="Solve")
 drawBoard(BOARD)
 running = True
 while running:
@@ -101,5 +105,6 @@ while running:
             if pos[1] > Config.Window.side:
                 drawResult(RESULT)
                 drawBoard(BOARD)
+                drawButton(buttonText="")
 
     pygame.display.update()
