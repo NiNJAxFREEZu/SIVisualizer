@@ -1,4 +1,4 @@
-from symbols import DELTAS
+from FreeFlowSolver.symbols import DELTAS
 
 def loop_board(board):
     for i, row in enumerate(board):
