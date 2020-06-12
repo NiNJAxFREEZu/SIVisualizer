@@ -16,23 +16,3 @@ BL = BOTTOM | LEFT
 BR = BOTTOM | RIGHT
 
 DIR_TYPES = [LR, TB, TL, TR, BL, BR]
-
-DIR_FLIP = {
-    LEFT: RIGHT,
-    RIGHT: LEFT,
-    TOP: BOTTOM,
-    BOTTOM: TOP
-    }
-
-DIR_LOOKUP = {
-    LR: '─',
-    TB: '│',
-    TL: '┘',
-    TR: '└',
-    BL: '┐',
-    BR: '┌'
-    }
-
-RESULT_STRINGS = dict(s='successful',
-                      f='failed',
-                      u='unsolvable')
