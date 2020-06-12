@@ -4,6 +4,15 @@ from config import Config
 import puzzle_parser
 import result
 
+def drawButton():
+    # Drawing button rectangle
+    pygame.draw.rect(SCREEN, Config.Window.buttonColour,
+                     (0, Config.Window.side, Config.Window.side, Config.Window.buttonHeight))
+
+    #Drawing button text
+    myfont = pygame.font.SysFont('Comic Sans MS', Config.Window.buttonHeight)
+    textsurface = myfont.render(Config.Window.buttonText, False, (0, 0, 0))
+    SCREEN.blit(textsurface, (0, Config.Window.side))
 
 def drawBoard(board):
     # Drawing grid
@@ -70,6 +79,7 @@ RESULT = puzzle_parser.parse_result_to_2d_array(resultPath, puzzle_parser.c)
 
 # Action!
 SCREEN.fill(Config.Window.backgroundColour)
+drawButton()
 drawBoard(BOARD)
 running = True
 while running:

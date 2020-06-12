@@ -1,8 +1,13 @@
 class Config:
     class Window:
+        # Buttons
+        buttonHeight = 150
+        buttonColour = (100, 200, 200) # Grey
+        buttonText = "Solve"
+
         # Size of the window
-        side = 1000
-        size = (side, side)
+        side = 800
+        size = (side, side + buttonHeight)
 
         # Window caption
         caption = "Free flow"
@@ -11,7 +16,7 @@ class Config:
         iconPath = "img/icon.jpg"
 
         # RGB background colour
-        backgroundColour = (255, 255, 255)
+        backgroundColour = (255, 255, 255) # White
 
     class Grid:
         # Determines the THICCNESS of the grid
