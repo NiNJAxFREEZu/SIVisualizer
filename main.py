@@ -64,17 +64,16 @@ pygame.display.set_caption(Config.Window.caption)
 icon = pygame.image.load(Config.Window.iconPath)
 pygame.display.set_icon(icon)
 
+# Loading board file path from the command line
+
 # load parameters
-# if len(sys.argv) != 3:
+# if len(sys.argv) != 2:
 # sys.stderr.write("ERROR: Amount of parameters don't match!\n")
-# sys.stderr.write("Try using: visualizer.py [board-file-path] [result-file-path]")
+# sys.stderr.write("Try using: visualizer.py [board-file-path]")
 # exit(1)
 
 # boardPath = str(sys.argv[1])
-# resultPath = str(sys.argv[2])
-
 boardPath = "board_01.txt"
-# resultPath = "result_01.txt"
 
 
 # Solving the puzzle!
