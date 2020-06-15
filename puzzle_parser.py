@@ -16,7 +16,7 @@ COLOR_VALUES = {
     "B": (100, 149, 237),
     "Y": (255, 213, 0),
     "P": (255, 97, 129),
-    "T": (97, 255, 223),
+    "T": (58, 202, 187),
     "V": (153, 50, 153),
     "N": (50, 50, 102),
     "O": (255, 128, 50),
@@ -107,14 +107,22 @@ def chunks(l, n):
 
 
 def parse_result_to_2d_array(SOLUTION, colors):
-    board = list()
+    color_results = list()
+    dir_results = list()
+
     for line in SOLUTION:
-        new_row = list()
+        color_row = list()
+        dir_row = list()
+
         for elem in line:
             color = colors[str(elem[0])]
             color = COLOR_VALUES[color]
-            new_row.append(color)
-        board.append(new_row)
-    return board
+            color_row.append(color)
+            dir_row.append(elem[1])
+
+        color_results.append(color_row)
+        dir_results.append(dir_row)
+
+    return color_results, dir_results
 
 

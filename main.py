@@ -1,5 +1,6 @@
 import pygame
 import sys
+from math import pi
 from config import Config
 import puzzle_parser
 import result
@@ -35,20 +36,65 @@ def drawBoard(board):
             pygame.draw.circle(SCREEN, colour,
                                (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize)
             # draw circle border
-            pygame.draw.circle(SCREEN, Config.Circle.borderColour,
-                               (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize,
-                               int(Config.Grid.thickness/2))
+            # pygame.draw.circle(SCREEN, Config.Circle.borderColour,
+            #                    (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize,
+            #                    int(Config.Grid.thickness/2))
 
 
-def drawResult(result):
+def drawResult(colors, dirs):
+
+    def drawDir(dirtype, colour, x, y):
+        line_width=int(blockSize / 10)
+        top = (x * blockSize + blockSize/2, y * blockSize-(blockSize/2))
+        bottom = (x * blockSize + blockSize/2, (y+1) * blockSize+blockSize/5)
+        left = (x * blockSize-(blockSize/5), y * blockSize + blockSize / 2)
+        right = ((x+1) * blockSize+blockSize/5, y * blockSize + blockSize / 2)
+        middle = (x * blockSize + blockSize / 2, y * blockSize + (blockSize / 2))
+
+        # straight line from top to bottom
+        if(dirtype==12): pygame.draw.line(SCREEN, colour, top, bottom, line_width)
+
+        #straight line from left to right
+        elif(dirtype==3): pygame.draw.line(SCREEN, colour, left, right, line_width)
+
+        #turn from top to left
+        elif(dirtype==5):
+            pygame.draw.line(SCREEN, colour, top, middle, line_width)
+            pygame.draw.line(SCREEN, colour, (x * blockSize - (blockSize / 5), y * blockSize + blockSize / 2),
+                              ((x + 1) * blockSize - blockSize / 2+line_width/2, y * blockSize + blockSize / 2), line_width)
+
+        #turn from top to right
+        elif (dirtype == 6):
+            pygame.draw.line(SCREEN, colour, top, middle, line_width)
+            pygame.draw.line(SCREEN, colour, (x * blockSize + (blockSize / 2)-line_width/3, y * blockSize + blockSize / 2),
+                             ((x + 1) * blockSize + blockSize / 2 + line_width/2, y * blockSize + blockSize / 2),
+                             line_width)
+
+        #from bottom to right
+        elif(dirtype==10):
+            pygame.draw.line(SCREEN, colour, bottom, middle, line_width)
+            pygame.draw.line(SCREEN, colour,
+                             (x * blockSize + (blockSize / 2)-line_width/3, y * blockSize + blockSize / 2),
+                             ((x + 1) * blockSize + blockSize / 2 + line_width / 2, y * blockSize + blockSize / 2),
+                             line_width)
+
+        #from bottom to left
+        if(dirtype==9):
+            pygame.draw.line(SCREEN, colour, bottom, middle, line_width)
+            pygame.draw.line(SCREEN, colour, (x * blockSize - (blockSize / 5), y * blockSize + blockSize / 2),
+                            (x * blockSize+blockSize/2+line_width/2, y * blockSize + blockSize / 2), line_width)
+
     # Drawing grid
-    blockSize = int(Config.Window.side / len(result))  # Set the size of the grid block
-    for x in range(len(result)):
-        for y in range(len(result)):
-            colour = result[y][x]
-            rect = pygame.Rect(x * blockSize, y * blockSize,
-                               blockSize, blockSize)
-            pygame.draw.rect(SCREEN, colour, rect)
+    blockSize = int(Config.Window.side / len(colors))  # Set the size of the grid block
+    for x in range(len(colors)):
+        for y in range(len(colors)):
+            colour = colors[x][y]
+            dirtype = dirs[x][y]
+
+            #rect = pygame.Rect(x * blockSize, y * blockSize,
+                               #     blockSize, blockSize)
+            #pygame.draw.rect(SCREEN, colour, rect)
+            drawDir(dirtype, colour, y, x)
 
 
 # pygame init
@@ -73,7 +119,7 @@ pygame.display.set_icon(icon)
 # boardPath = str(sys.argv[1])
 # resultPath = str(sys.argv[2])
 
-boardPath = "board_02.txt"
+boardPath = "boards/board_7_03.txt"
 # resultPath = "result_01.txt"
 
 BOARD, COLORS_PARSED_INPUT = SatSolver.parse_puzzle(boardPath)
@@ -83,7 +129,7 @@ _, SAT_DECODED_SOLUTION = SatSolver.solve_sat(BOARD, COLORS_PARSED_INPUT, color_
 SWAPED_COLORS = dict([(str(value), str(key)) for key, value in COLORS_PARSED_INPUT.items()])
 
 BOARD = puzzle_parser.parse_input_file_to_2d_array(BOARD)
-RESULT = puzzle_parser.parse_result_to_2d_array(SAT_DECODED_SOLUTION, SWAPED_COLORS)
+COLOR_RESULT, DIR_RESULT = puzzle_parser.parse_result_to_2d_array(SAT_DECODED_SOLUTION, SWAPED_COLORS)
 
 # Action!
 SCREEN.fill(Config.Window.backgroundColour)
@@ -99,7 +145,7 @@ while running:
 
             # If solve button was pressed
             if pos[1] > Config.Window.side:
-                drawResult(RESULT)
-                drawBoard(BOARD)
+                drawResult(COLOR_RESULT, DIR_RESULT)
+                #drawBoard(BOARD)
 
     pygame.display.update()
