@@ -5,15 +5,15 @@ import puzzle_parser
 import result
 import FreeFlowSolver.SAT as SatSolver
 
-def drawButton(buttonText):
+def drawButton():
     # Drawing button rectangle
     pygame.draw.rect(SCREEN, Config.Window.buttonColour,
                      (0, Config.Window.side, Config.Window.side, Config.Window.buttonHeight))
 
     #Drawing button text
-    myfont = pygame.font.SysFont('Comic Sans MS', Config.Window.buttonHeight)
-    textsurface = myfont.render(buttonText, False, (0, 0, 0))
-    SCREEN.blit(textsurface, (0, Config.Window.side))
+    myfont = pygame.font.SysFont('Arial', int(Config.Window.buttonHeight/2))
+    textsurface = myfont.render(Config.Window.buttonText, False, (255, 255, 255))
+    SCREEN.blit(textsurface, (Config.Window.side/2-40, Config.Window.side+5))
 
 def drawBoard(board):
     # Drawing grid
@@ -25,7 +25,7 @@ def drawBoard(board):
             pygame.draw.rect(SCREEN, Config.Grid.colour, rect, Config.Grid.thickness)
 
     # Drawing circles
-    circleSize = int(blockSize / 4)
+    circleSize = int(blockSize / 3)
     for x in range(len(board)):
         for y in range(len(board)):
             colour = board[y][x]
@@ -37,7 +37,7 @@ def drawBoard(board):
             # draw circle border
             pygame.draw.circle(SCREEN, Config.Circle.borderColour,
                                (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize,
-                               int(Config.Grid.thickness / 2))
+                               int(Config.Grid.thickness/2))
 
 
 def drawResult(result):
@@ -64,21 +64,18 @@ pygame.display.set_caption(Config.Window.caption)
 icon = pygame.image.load(Config.Window.iconPath)
 pygame.display.set_icon(icon)
 
-# Loading board file path from the command line
-
 # load parameters
-# if len(sys.argv) != 2:
+# if len(sys.argv) != 3:
 # sys.stderr.write("ERROR: Amount of parameters don't match!\n")
-# sys.stderr.write("Try using: visualizer.py [board-file-path]")
+# sys.stderr.write("Try using: visualizer.py [board-file-path] [result-file-path]")
 # exit(1)
 
 # boardPath = str(sys.argv[1])
-boardPath = "board_01.txt"
+# resultPath = str(sys.argv[2])
 
+boardPath = "board_02.txt"
+# resultPath = "result_01.txt"
 
-# Solving the puzzle!
-
-print("\nFree flow game!\n")
 BOARD, COLORS_PARSED_INPUT = SatSolver.parse_puzzle(boardPath)
 color_var, dir_vars, num_vars, clauses = SatSolver.reduce_to_sat(BOARD, COLORS_PARSED_INPUT)
 _, SAT_DECODED_SOLUTION = SatSolver.solve_sat(BOARD, COLORS_PARSED_INPUT, color_var, dir_vars, clauses)
@@ -88,9 +85,9 @@ SWAPED_COLORS = dict([(str(value), str(key)) for key, value in COLORS_PARSED_INP
 BOARD = puzzle_parser.parse_input_file_to_2d_array(BOARD)
 RESULT = puzzle_parser.parse_result_to_2d_array(SAT_DECODED_SOLUTION, SWAPED_COLORS)
 
-# Drawing everything
+# Action!
 SCREEN.fill(Config.Window.backgroundColour)
-drawButton(buttonText="Solve")
+drawButton()
 drawBoard(BOARD)
 running = True
 while running:
@@ -104,6 +101,5 @@ while running:
             if pos[1] > Config.Window.side:
                 drawResult(RESULT)
                 drawBoard(BOARD)
-                drawButton(buttonText="")
 
     pygame.display.update()

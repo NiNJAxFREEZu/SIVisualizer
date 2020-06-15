@@ -161,9 +161,9 @@ def reduce_to_sat(puzzle, colors):
     num_vars = num_color_vars + num_dir_vars
     clauses = color_clauses + dir_clauses
 
-    print('Wygenerowano', len(color_clauses), " klauzul z", num_color_vars, "zmiennymi koloru.")
-    print('Wygenerowano', len(dir_clauses), "klauzul z", num_color_vars, "zmiennymi kierunku.")
-    print('Wygenerowano łącznie', len(clauses), "z", num_vars, "zmiennymi.")
+    print('\nWygenerowano', len(color_clauses), " klauzul z", num_color_vars, "zmiennymi koloru.")
+    print('Wygenerowano', len(dir_clauses), "klauzul z", num_dir_vars, "zmiennymi kierunku.")
+    print('Wygenerowano łącznie', len(clauses), "klauzul z", num_vars, "zmiennymi.")
     print("\n")
 
     return color_var, dir_vars, num_vars, clauses

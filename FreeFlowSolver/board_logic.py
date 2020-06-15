@@ -73,14 +73,14 @@ def parse_puzzle(filename):
                 # jeśli już odnotowaliśmy ten kolor na planszy
                 if char in colors:
                     color = colors[char]
-                    print("Just got ", char, " again.")
+                    print("Zarejestrowano ponownie kolor", char, ".")
                     # jeśli mamy już 2 komórki w tym kolorze
                     if color_counter[color]:
-                        print('I already have too many ', char, '!')
+                        print('Za dużo koloru', char, '!')
                         return None, None
                     color_counter[color] = 1
                 else:
-                    print("Just got ", char, ".")
+                    print("Zarejestrowano kolor", char, ".")
                     color = len(colors)
                     colors[char] = color
                     color_counter.append(0)
@@ -88,7 +88,7 @@ def parse_puzzle(filename):
     # sprawdź czy każdy kolor występuje dwa razy
     for char, color in colors.items():
         if not color_counter[color]:
-            print('Color ', char, ' has start but no end!')
+            print('Kolor', char, 'ma początek bez końca!')
             return None, None
 
     return board, colors

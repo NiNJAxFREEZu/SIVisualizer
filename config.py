@@ -1,9 +1,12 @@
 class Config:
     class Window:
-        # Window side and button props
-        side = 600
-        buttonHeight = int(side / 8)
+        # Buttons
+        buttonHeight = 50
         buttonColour = (100, 200, 200) # Grey
+        buttonText = "Solve"
+
+        # Size of the window
+        side = 500
         size = (side, side + buttonHeight)
 
         # Window caption
@@ -17,11 +20,11 @@ class Config:
 
     class Grid:
         # Determines the THICCNESS of the grid
-        thickness = 10
+        thickness = 7
 
         # RGB grid colour
-        colour = (20, 20, 20)
+        colour = (211, 211, 211)
 
 
     class Circle:
-        borderColour = (10, 10, 10)
+        borderColour = (211, 211, 211)
