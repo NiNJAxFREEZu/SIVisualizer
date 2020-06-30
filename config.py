@@ -3,11 +3,17 @@ class Config:
         # Buttons
         buttonHeight = 50
         buttonColour = (100, 200, 200) # Grey
+        buttonColour_01 = (255, 213, 0)  # Grey
+        buttonColour_02 = (255, 97, 129)  # Grey
+        buttonColour_03 = (50, 50, 102)  # Grey
         buttonText = "Solve"
+        buttonText_01 = "3 x 3"
+        buttonText_02 = "5 x 5"
+        buttonText_03 = "10 x 10"
 
         # Size of the window
         side = 500
-        size = (side, side + buttonHeight)
+        size = (side, side + 4*buttonHeight)
 
         # Window caption
         caption = "Free flow"

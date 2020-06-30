@@ -4,6 +4,7 @@ from math import pi
 from config import Config
 import puzzle_parser
 import result
+import random
 import FreeFlowSolver.SAT as SatSolver
 
 def drawButton():
@@ -11,13 +12,37 @@ def drawButton():
     pygame.draw.rect(SCREEN, Config.Window.buttonColour,
                      (0, Config.Window.side, Config.Window.side, Config.Window.buttonHeight))
 
+    pygame.draw.rect(SCREEN, Config.Window.buttonColour_01,
+                     (0, Config.Window.side+Config.Window.buttonHeight, Config.Window.side+Config.Window.buttonHeight,
+                      Config.Window.buttonHeight))
+
+    pygame.draw.rect(SCREEN, Config.Window.buttonColour_02,
+                     (0, Config.Window.side+2*Config.Window.buttonHeight, Config.Window.side+2* Config.Window.buttonHeight,
+                      Config.Window.buttonHeight))
+
+    pygame.draw.rect(SCREEN, Config.Window.buttonColour_03,
+                     (0, Config.Window.side+3*Config.Window.buttonHeight, Config.Window.side+3*Config.Window.buttonHeight,
+                      Config.Window.buttonHeight))
+
     #Drawing button text
     myfont = pygame.font.SysFont('Arial', int(Config.Window.buttonHeight/2))
     textsurface = myfont.render(Config.Window.buttonText, False, (255, 255, 255))
     SCREEN.blit(textsurface, (Config.Window.side/2-40, Config.Window.side+5))
 
+    textsurface_01 = myfont.render(Config.Window.buttonText_01, False, (255, 255, 255))
+    SCREEN.blit(textsurface_01, (Config.Window.side / 2 - 35, Config.Window.side + Config.Window.buttonHeight+5))
+
+    textsurface_02 = myfont.render(Config.Window.buttonText_02, False, (255, 255, 255))
+    SCREEN.blit(textsurface_02, (Config.Window.side / 2 - 35, Config.Window.side + 2*Config.Window.buttonHeight+5))
+
+    textsurface_03 = myfont.render(Config.Window.buttonText_03, False, (255, 255, 255))
+    SCREEN.blit(textsurface_03, (Config.Window.side / 2 - 50, Config.Window.side + 3*Config.Window.buttonHeight+5))
+
 def drawBoard(board):
     # Drawing grid
+    rect = pygame.Rect(0,0,Config.Window.side, Config.Window.side)
+    pygame.draw.rect(SCREEN, (255,255,255), rect)
+
     blockSize = int(Config.Window.side / len(board))  # Set the size of the grid block
     for x in range(len(board)):
         for y in range(len(board)):
@@ -119,21 +144,29 @@ pygame.display.set_icon(icon)
 # boardPath = str(sys.argv[1])
 # resultPath = str(sys.argv[2])
 
-boardPath = "boards/board_7_03.txt"
+boards_3 = ["boards/board_3_01.txt"]
+boards_5 = ["boards/board_5_01.txt", "boards/board_5_02.txt", "boards/board_5_03.txt"]
+boards_7 = ["boards/board_7_01.txt", "boards/board_7_02.txt", "boards/board_7_03.txt"]
+boards_10 = ["boards/board_10_01.txt", "boards/board_10_02.txt", "boards/board_10_03.txt"]
+
+boardPath = "boards/board_7_02.txt"
 # resultPath = "result_01.txt"
 
-BOARD, COLORS_PARSED_INPUT = SatSolver.parse_puzzle(boardPath)
-color_var, dir_vars, num_vars, clauses = SatSolver.reduce_to_sat(BOARD, COLORS_PARSED_INPUT)
-_, SAT_DECODED_SOLUTION = SatSolver.solve_sat(BOARD, COLORS_PARSED_INPUT, color_var, dir_vars, clauses)
+def loadBoard(path):
+    BOARD, COLORS_PARSED_INPUT = SatSolver.parse_puzzle(path)
+    color_var, dir_vars, num_vars, clauses = SatSolver.reduce_to_sat(BOARD, COLORS_PARSED_INPUT)
+    _, SAT_DECODED_SOLUTION = SatSolver.solve_sat(BOARD, COLORS_PARSED_INPUT, color_var, dir_vars, clauses)
 
-SWAPED_COLORS = dict([(str(value), str(key)) for key, value in COLORS_PARSED_INPUT.items()])
+    SWAPED_COLORS = dict([(str(value), str(key)) for key, value in COLORS_PARSED_INPUT.items()])
 
-BOARD = puzzle_parser.parse_input_file_to_2d_array(BOARD)
-COLOR_RESULT, DIR_RESULT = puzzle_parser.parse_result_to_2d_array(SAT_DECODED_SOLUTION, SWAPED_COLORS)
+    BOARD = puzzle_parser.parse_input_file_to_2d_array(BOARD)
+    COLOR_RESULT, DIR_RESULT = puzzle_parser.parse_result_to_2d_array(SAT_DECODED_SOLUTION, SWAPED_COLORS)
+    return BOARD, COLOR_RESULT, DIR_RESULT
 
 # Action!
 SCREEN.fill(Config.Window.backgroundColour)
 drawButton()
+BOARD, COLOR_RESULT, DIR_RESULT = loadBoard(boardPath)
 drawBoard(BOARD)
 running = True
 while running:
@@ -144,8 +177,26 @@ while running:
             pos = pygame.mouse.get_pos()
 
             # If solve button was pressed
-            if pos[1] > Config.Window.side:
+            if pos[1] < Config.Window.side + Config.Window.buttonHeight:
                 drawResult(COLOR_RESULT, DIR_RESULT)
                 #drawBoard(BOARD)
+
+            elif pos[1] < Config.Window.side + 2*Config.Window.buttonHeight:
+                print("3x3")
+                boardPath = random.choice(boards_3)
+                BOARD, COLOR_RESULT, DIR_RESULT = loadBoard(boardPath)
+                drawBoard(BOARD)
+
+            elif pos[1] < Config.Window.side + 3*Config.Window.buttonHeight:
+                print("5x5")
+                boardPath = random.choice(boards_5)
+                BOARD, COLOR_RESULT, DIR_RESULT = loadBoard(boardPath)
+                drawBoard(BOARD)
+
+            else:
+                print("10x10")
+                boardPath = random.choice(boards_10)
+                BOARD, COLOR_RESULT, DIR_RESULT = loadBoard(boardPath)
+                drawBoard(BOARD)
 
     pygame.display.update()
