@@ -1,6 +1,9 @@
 # SIVisualizer
 Visualizer for free flow puzzle project
 
+# SAT related files directory
+/app
+
 # Main entry 
 flow_free.py
 
