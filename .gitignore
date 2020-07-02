@@ -1,2 +1,4 @@
 # Project exclude paths
 /venv/
+/build/
+flow_free.spec
