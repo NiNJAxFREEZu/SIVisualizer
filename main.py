@@ -60,10 +60,6 @@ def drawBoard(board):
             # draw circle
             pygame.draw.circle(SCREEN, colour,
                                (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize)
-            # draw circle border
-            # pygame.draw.circle(SCREEN, Config.Circle.borderColour,
-            #                    (int(x * blockSize + blockSize / 2), int(y * blockSize + blockSize / 2)), circleSize,
-            #                    int(Config.Grid.thickness/2))
 
 
 def drawResult(colors, dirs):
@@ -115,10 +111,6 @@ def drawResult(colors, dirs):
         for y in range(len(colors)):
             colour = colors[x][y]
             dirtype = dirs[x][y]
-
-            #rect = pygame.Rect(x * blockSize, y * blockSize,
-                               #     blockSize, blockSize)
-            #pygame.draw.rect(SCREEN, colour, rect)
             drawDir(dirtype, colour, y, x)
 
 
@@ -150,7 +142,6 @@ boards_7 = ["boards/board_7_01.txt", "boards/board_7_02.txt", "boards/board_7_03
 boards_10 = ["boards/board_10_01.txt", "boards/board_10_02.txt", "boards/board_10_03.txt"]
 
 boardPath = "boards/board_7_02.txt"
-# resultPath = "result_01.txt"
 
 def loadBoard(path):
     BOARD, COLORS_PARSED_INPUT = SatSolver.parse_puzzle(path)

@@ -75,8 +75,6 @@ def parse_input_file_to_2d_array(BOARD):
     return board
 
 
-res = "result_01.txt"
-
 c = {
     "0": "R",
     "1": "G"
